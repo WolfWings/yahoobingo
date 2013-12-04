@@ -1,4 +1,4 @@
-This is context Yahoo is running; you can get the details here:
+This is a contest Yahoo is running; you can get the details here:
 
 http://yahoobingo.herokuapp.com/
 
