@@ -1,4 +1,4 @@
-io = require "socket.io-client"
+io = require "socket.io-client" if exports? && this.exports != exports
 socket = io.connect "ws://yahoobingo.herokuapp.com"
 socket.on "connect", ->
 	result = "playing"

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<style type="text/css">
+tr { height: 2em; }
+td { background: #FFF; text-align: center; width: 2em; }
+td.hit { background: #F00; }
+</style>
+<script type="text/javascript" src="node_modules/socket.io-client/dist/socket.io.min.js"></script>
+<script type="text/javascript" src="lib/bingo.js"></script>
+<script type="text/javascript">
+function init() { "use strict";
+	var table = document.getElementById("card");
+	for (var line = 0; line < 5; line++) {
+		var row = document.createElement("tr");
+		for (var column = 0; column < 25; column += 5) {
+			var cell = document.createElement("td");
+			cell.setAttribute("id", "bit" + (line + column));
+			cell.innerHTML = "?";
+			row.appendChild(cell);
+		}
+		table.appendChild(row);
+	}
+}
+</script>
+<title>Yahoo Bingo Card Client</title>
+</head><body onload="init()">
+<table border="1" cellspacing="0" id="card"><tr>
+<th>B</th><th>I</th><th>N</th><th>G</th><th>O</th>
+</tr></table>
+</body></html>
+
