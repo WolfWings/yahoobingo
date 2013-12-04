@@ -4,10 +4,10 @@
 ,	"main": "bingo.coffee"
 ,	"repository": "https://github.com/WolfWings/yahoobingo"
 ,	"dependencies":
-	{	"coffee-script": "1.6.X"
-	,	"socket.io-client": "0.9.X"
+	{	"socket.io-client": "0.9.X"
 	}
-,	"devDependencies": {
+,	"devDependencies":
+	{	"coffee-script": "1.6.X"
 	}
 ,	"keywords":
 	[	"bingo"
