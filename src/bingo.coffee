@@ -1,6 +1,12 @@
 ai = (callback, io) ->
 	socket = io.connect "ws://yahoobingo.herokuapp.com"
 
+	masks = {}
+	masks["\\"] = parseInt ['10000', '01000', '00100', '00010', '00001'].join(""), 2
+	masks["/"]  = parseInt ['00001', '00010', '00100', '01000', '10000'].join(""), 2
+	masks["|"]  = parseInt ['00001', '00001', '00001', '00001', '00001'].join(""), 2
+	masks["-"]  = parseInt ['00000', '00000', '00000', '00000', '11111'].join(""), 2
+
 	state = "initializing"
 	scores = {}
 	card = 0
@@ -43,13 +49,13 @@ ai = (callback, io) ->
 
 		card |= (1 << bit)
 
-		win() if ((card & 0x1041041) == 0x1041041)
-		win() if ((card & 0x111110) == 0x111110)
+		win() if ((card & masks["\\"]) == masks["\\"])
+		win() if ((card & masks["/"]) == masks["/"])
 
-		row = 0x1F << (Math.floor(bit / 5) * 5)
+		row = masks["-"] << (Math.floor(bit / 5) * 5)
 		win() if ((card & row) == row)
 
-		column = 0x108421 << (bit % 5)
+		column = masks["|"] << (bit % 5)
 		win() if ((card & column) == column)
 
 	socket.on "connect", ->
