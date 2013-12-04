@@ -1,13 +1,16 @@
 {	"name": "Yahoo-Bingo"
 ,	"version": "0.0.1"
 ,	"description": "Client for Yahoo Bingo challenge"
-,	"main": "bingo.coffee"
+,	"main": "lib/bingo.js"
 ,	"repository": "https://github.com/WolfWings/yahoobingo"
 ,	"dependencies":
 	{	"socket.io-client": "0.9.X"
 	}
 ,	"devDependencies":
 	{	"coffee-script": "1.6.X"
+	}
+,	"scripts":
+	{	"prepublish": "./node_modules/.bin/coffee -o lib -c src/bingo.coffee"
 	}
 ,	"keywords":
 	[	"bingo"
