@@ -1,0 +1,22 @@
+{	"name": "Yahoo Bingo"
+,	"version": "0.0.1"
+,	"description": "Client for Yahoo Bingo challenge"
+,	"main": "bingo.coffee"
+,	"repository": "https://github.com/WolfWings/yahoobingo"
+,	"dependencies":
+	{	"coffee-script": "1.6.X"
+	,	"socket.io-client": "0.9.X"
+	}
+,	"devDependencies": {
+	}
+,	"keywords":
+	[	"bingo"
+	,	"coffeescript"
+	]
+,	"author": "WolfWings"
+,	"licenses": [
+		{	"type": "GPLv2"
+		,	"url": "https://github.com/WolfWings/yahoobingo/blob/master/LICENSE"
+		}
+	]
+}
