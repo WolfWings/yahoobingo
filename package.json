@@ -11,6 +11,7 @@
 	}
 ,	"scripts":
 	{	"prepublish": "./node_modules/.bin/coffee -o lib -c src/bingo.coffee"
+	,	"start": "node lib/bingo.js"
 	}
 ,	"keywords":
 	[	"bingo"
