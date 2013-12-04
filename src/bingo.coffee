@@ -1,45 +1,64 @@
-io = require "socket.io-client" if exports? && this.exports != exports
-socket = io.connect "ws://yahoobingo.herokuapp.com"
-socket.on "connect", ->
-	result = "playing"
+ai = (callback, io) ->
+	socket = io.connect "ws://yahoobingo.herokuapp.com"
 
+	state = "initializing"
 	scores = {}
 	card = 0
 
+	win = ->
+		return unless state = "playing"
+		socket.emit "bingo"
+		state = "calling bingo"
+		callback "result", "BINGO!?", ""
+
+	socket.on "win", ->
+		state = "won"
+
+	socket.on "lose", ->
+		state = "lost"
+
+	socket.on "disconnect", ->
+		callback "result", state, "hit"
+		process.exit() if process? and process.exit?
+
 	socket.on "card", (data) ->
+		state = "playing"
+		scores = {}
+		card = 0
 		bit = 0
 		for letter, balls of data.slots
-			console.log letter, balls
 			for ball in balls
-				scores["#{letter}#{ball}"] = bit
+				data = "#{letter}#{ball}"
+				callback bit, data, ""
+				scores[data] = bit
 				bit++
 
 	socket.on "number", (data) ->
-		if scores[data]?
-			bit = scores[data]
-			card |= (1 << bit)
-			column = 0x108421 << (bit % 5)
-			row = 0x1F << (Math.floor(bit / 5) * 5)
+		unless scores[data]?
+			callback -1, data, ""
+			return
 
-			console.log bit % 5, Math.floor(bit / 5), data, card.toString 2
+		bit = scores[data]
+		callback bit, data, "hit"
 
-			socket.emit "bingo" if ((card & column) == column)
-			socket.emit "bingo" if ((card & row) == row)
-			socket.emit "bingo" if ((card & 0x1041041) == 0x1041041)
-			socket.emit "bingo" if ((card & 0x111110) == 0x111110)
-		else
-			console.log data
+		card |= (1 << bit)
 
-	socket.on "win", ->
-		result = "won"
+		win() if ((card & 0x1041041) == 0x1041041)
+		win() if ((card & 0x111110) == 0x111110)
 
-	socket.on "lose", ->
-		result = "lost"
+		row = 0x1F << (Math.floor(bit / 5) * 5)
+		win() if ((card & row) == row)
 
-	socket.on "disconnect", ->
-		console.log "You have #{result}."
-		process.exit()
+		column = 0x108421 << (bit % 5)
+		win() if ((card & column) == column)
 
-	socket.emit "register",
-		name: "WolfWings"
-		email: "wolfwings@wolfwings.us"
+	socket.on "connect", ->
+		socket.emit "register",
+			name: "WolfWings"
+			email: "wolfwings@wolfwings.us"
+			url: "https://github.com/WolfWings/yahoobingo/"
+
+Bingo = exports? and exports or @Bingo = {}
+
+class Bingo.Client
+	ai: ai

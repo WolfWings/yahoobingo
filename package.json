@@ -11,16 +11,12 @@
 	}
 ,	"scripts":
 	{	"prepublish": "./node_modules/.bin/coffee -o lib -c src/bingo.coffee"
-	,	"start": "node lib/bingo.js"
+	,	"start": "node cli.js"
 	}
 ,	"keywords":
 	[	"bingo"
 	,	"coffeescript"
 	]
 ,	"author": "WolfWings"
-,	"licenses": [
-		{	"type": "GPLv2"
-		,	"url": "https://github.com/WolfWings/yahoobingo/blob/master/LICENSE"
-		}
-	]
+,	"license": "BSD-2-Clause"
 }

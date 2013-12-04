@@ -1,31 +1,58 @@
 <!DOCTYPE html>
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <style type="text/css">
-tr { height: 2em; }
-td { background: #FFF; text-align: center; width: 2em; }
-td.hit { background: #F00; }
+table {
+	float: left;
+	border-collapse: collapse;
+	border: 1em;
+}
+tr {
+	height: 4em;
+}
+th, td {
+	background: #FFF;
+	text-align: center;
+	width: 4em;
+	border: 1px solid black;
+}
+td.hit {
+	background: #F00;
+}
 </style>
 <script type="text/javascript" src="node_modules/socket.io-client/dist/socket.io.min.js"></script>
 <script type="text/javascript" src="lib/bingo.js"></script>
 <script type="text/javascript">
-function init() { "use strict";
-	var table = document.getElementById("card");
-	for (var line = 0; line < 5; line++) {
-		var row = document.createElement("tr");
-		for (var column = 0; column < 25; column += 5) {
-			var cell = document.createElement("td");
-			cell.setAttribute("id", "bit" + (line + column));
-			cell.innerHTML = "?";
-			row.appendChild(cell);
-		}
-		table.appendChild(row);
+var module = {exports: {}};
+
+var callback = (function(bit, ball, state) { "use strict";
+	console.log(bit, ball, state);
+	if (bit === -1) {
+		return;
 	}
-}
+	var cell = document.getElementById("bit" + bit);
+	cell.innerHTML = "" + ball;
+	cell.setAttribute("class", state);
+});
+
+var init = (function() { "use strict";
+	var bingo = new Bingo.Client();
+	bingo.ai(callback, io);
+});
 </script>
 <title>Yahoo Bingo Card Client</title>
 </head><body onload="init()">
-<table border="1" cellspacing="0" id="card"><tr>
-<th>B</th><th>I</th><th>N</th><th>G</th><th>O</th>
-</tr></table>
+<table><thead><tr>
+<th><h1>B</h1>1-20</th>
+<th><h1>I</h1>21-40</th>
+<th><h1>N</h1>41-60</th>
+<th><h1>G</h1>61-80</th>
+<th><h1>O</h1>81-100</th>
+</tr></thead><tbody>
+<tr><td id="bit0">?</td><td id="bit5">?</td><td id="bit10">?</td><td id="bit15">?</td><td id="bit20">?</td></tr>
+<tr><td id="bit1">?</td><td id="bit6">?</td><td id="bit11">?</td><td id="bit16">?</td><td id="bit21">?</td></tr>
+<tr><td id="bit2">?</td><td id="bit7">?</td><td id="bit12">?</td><td id="bit17">?</td><td id="bit22">?</td></tr>
+<tr><td id="bit3">?</td><td id="bit8">?</td><td id="bit13">?</td><td id="bit18">?</td><td id="bit23">?</td></tr>
+<tr><td id="bit4">?</td><td id="bit9">?</td><td id="bit14">?</td><td id="bit19">?</td><td id="bit24">?</td></tr>
+<tr><td id="bitresult" colspan="5">result</td></tr></tbody></table>
 </body></html>
 
