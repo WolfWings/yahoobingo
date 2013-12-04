@@ -1,4 +1,4 @@
-{	"name": "Yahoo Bingo"
+{	"name": "Yahoo-Bingo"
 ,	"version": "0.0.1"
 ,	"description": "Client for Yahoo Bingo challenge"
 ,	"main": "bingo.coffee"
